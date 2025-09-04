@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styple.css">
+  <title>Radhey Bags</title>
+  <meta name="description" content="Radhey Bags – Stylish, durable bags for every occasion" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f14;      /* Deep charcoal */
+      --card:#121821;    /* Card surface */
+      --muted:#a9b4c0;   /* Muted text */
+      --text:#eaf2ff;    /* Main text */
+      --brand:#4f8cff;   /* Accent */
+      --brand-2:#22c55e; /* Secondary accent */
+      --ring: 0 10px 25px rgba(0,0,0,.35);
+      --ring-2: 0 12px 40px rgba(79,140,255,.25);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin-inline:auto;padding:24px}
+
+    /* NAV */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--brand),#7aa8ff);display:grid;place-items:center;box-shadow:var(--ring-2)}
+    .logo span{font-weight:800;color:white}
+    .nav a.btn{padding:10px 16px;background:var(--card);border:1px solid #1f2b3a;border-radius:12px}
+    .nav a.btn.primary{background:linear-gradient(135deg,var(--brand),#7aa8ff);border-color:transparent;color:#0b1020;font-weight:700}
+
+    /* HERO */
+    .hero{margin-top:28px;background:radial-gradient(1200px 400px at 10% -10%, rgba(79,140,255,.20), transparent 60%),
+           radial-gradient(800px 400px at 90% -20%, rgba(34,197,94,.15), transparent 60%);
+          border:1px solid #1f2b3a;border-radius:24px;padding:32px;box-shadow:var(--ring)}
+    .hero-inner{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+    .hero h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 10px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .cta .btn{padding:12px 16px;border-radius:12px;border:1px solid #2a3647;background:#162031;color:#e6eeff;font-weight:600}
+    .cta .btn.primary{background:linear-gradient(135deg,var(--brand),#7aa8ff);border-color:transparent;color:#0b1020}
+    .hero-card{background:linear-gradient(180deg,#121821, #0f151e);border:1px solid #1f2b3a;border-radius:20px;padding:18px;display:grid;gap:10px}
+    .stat{display:flex;align-items:center;gap:10px;color:var(--muted)}
+    .stat strong{color:var(--text)}
+
+    /* FILTERS */
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0 10px}
+    .chip{padding:8px 12px;border-radius:999px;border:1px solid #2a3647;background:#121821;color:#cfe0ff;cursor:pointer}
+    .chip.active{background:linear-gradient(135deg,var(--brand),#7aa8ff);color:#0b1020;border-color:transparent}
+
+    /* GRID */
+    .grid{display:grid;grid-template-columns:repeat(1,1fr);gap:16px}
+    @media (min-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (min-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+
+    .card{background:linear-gradient(180deg,#0f151e,#0b1119);border:1px solid #1f2b3a;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--ring)}
+    .thumb{aspect-ratio:4/3;background:#0b0f14;display:block;position:relative}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .badge{position:absolute;top:10px;left:10px;background:rgba(79,140,255,.9);color:#0b1020;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.3px}
+    .body{padding:14px 14px 16px;display:grid;gap:6px}
+    .title{font-weight:700}
+    .meta{color:var(--muted);font-size:14px}
+    .actions{margin-top:8px;display:flex;gap:10px}
+    .btn-card{flex:1;padding:10px 12px;border-radius:12px;border:1px solid #223042;background:#121821;color:#dce8ff;font-weight:600;cursor:pointer}
+    .btn-card.fill{background:linear-gradient(135deg,var(--brand),#7aa8ff);color:#0b1020;border-color:transparent}
+
+    /* LIGHTBOX */
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,12,.7);backdrop-filter:blur(4px);z-index:99}
+    .lightbox.open{display:flex}
+    .lightbox-inner{max-width:min(96vw,1100px);max-height:90vh;background:#0b1119;border:1px solid #223042;border-radius:18px;box-shadow:var(--ring-2);overflow:hidden}
+    .lightbox img{display:block;max-width:100%;max-height:70vh;object-fit:contain;background:#000}
+    .lightbox-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #223042}
+    .lightbox-title{font-weight:700}
+    .close{border:none;background:transparent;color:#9ab0cc;font-size:22px;cursor:pointer}
+
+    /* FOOTER */
+    footer{margin:36px 0 10px;color:#9fb0c9;text-align:center}
+
+    /* Small helper */
+    .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+
+    /* Helper banner (instructions for you) */
+    .helper{margin-top:18px;font-size:14px;color:#9fb0c9;background:#0f151e;border:1px dashed #2a3647;padding:12px;border-radius:12px}
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="container nav">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"><span>RB</span></div>
+      <div>
+        <div style="font-weight:800;letter-spacing:.4px">Radhey Bags</div>
+        <div style="color:var(--muted);font-size:12px;">Carry Quality. Carry Confidence.</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#catalog" class="btn">Catalog</a>
+      <a href="#contact" class="btn">Contact</a>
+      <a href="#" class="btn primary">Buy Now</a>
+      <!-- New Contact Me button -->
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVaKv71sqmdI4GAfDmbC-h4gOClGHrAiWLHWJiNIIfdfTdug/viewform?usp=sharing&ouid=118324731629180611523"
+         class="btn primary" target="_blank">Inquiry</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="container hero">
+    <div class="hero-inner">
+      <div>
+        <h1>Premium backpacks, handbags & travel duffels</h1>
+        <p>Radhey Bags blends durability with modern design. Explore our latest collection and find your perfect everyday companion.</p>
+        <div class="cta">
+          <a class="btn primary" href="#catalog">Explore Collection</a>
+          <a class="btn" href="#about">Why Radhey?</a>
+        </div>
+        <div class="helper" role="note">
+          <strong>How to add your own bag photos:</strong>
+          <ol style="margin:8px 0 0 18px">
+            <li>Create a folder named <code>images/</code> next to this <code>index.html</code>.</li>
+            <li>Put your JPG/PNG files there (e.g. <code>images/blue-backpack.jpg</code>).</li>
+            <li>Open the <code>IMAGES</code> list in the script at the bottom of this file and replace the sample entries with your file names, titles, prices and categories.</li>
+            <li>Reload the page. The gallery updates automatically. ✅</li>
+          </ol>
+        </div>
+      </div>
+      <aside class="hero-card">
+        <div class="stat">🎒 <span> Top pick: <strong>UrbanPro Backpack</strong></span></div>
+        <div class="stat">🧵 <span> Premium materials & stitching</span></div>
+        <div class="stat">🛡️ <span> 1-year warranty on all products</span></div>
+        <div class="stat">🚚 <span> Free shipping over ₹999</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="container" id="catalog">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <h2 style="margin:0">Catalog</h2>
+      <div class="filters" id="filters"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog">
+    <div class="lightbox-inner">
+      <div class="lightbox-head">
+        <div class="lightbox-title" id="lightboxTitle">Preview</div>
+        <button class="close" id="closeBtn" aria-label="Close">✕</button>
+      </div>
+      <img id="lightboxImg" alt="Bag preview" />
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="container" id="about">
+    <h2>Why Radhey?</h2>
+    <p class="meta">We design for Indian conditions—monsoon-ready fabrics, rugged zips, ergonomic straps, and styles that fit college, office, and travel. Tested on the move, built to last.</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="container" id="contact">
+    <h2>Contact</h2>
+    <div class="card" style="padding:16px">
+      <p class="meta">Have bulk/retail enquiries or need help? We’d love to hear from you.</p>
+      <p class="meta">Email: <a href="mailto:sales@radheybags.example">sales@radheybags.com</a> • Phone: +91-85069 69375</p>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Radhey Bags. All rights reserved.
+  </footer>
+
+  <script>
+  const IMAGES = [
+    { src: 'Image.png', title: 'Bags', price: '₹36', category: 'Backpack' },
+    { src: 'Image2.png', title: 'Bags', price: '₹12', category: 'Handbag' },
+    { src: 'Image3.png', title: 'Bags', price: '₹39', category: 'Duffel' },
+  ];
+
+  const CATEGORIES = ['All','Backpack','Handbag','Duffel'];
+
+  const grid = document.getElementById('grid');
+  const filtersEl = document.getElementById('filters');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const yearEl = document.getElementById('year');
+
+  yearEl.textContent = new Date().getFullYear();
+
+  let active = 'All';
+
+  function renderFilters(){
+    filtersEl.innerHTML = '';
+    CATEGORIES.forEach(cat => {
+      const chip = document.createElement('div');
+      chip.className = 'chip' + (active === cat ? ' active' : '');
+      chip.textContent = cat;
+      chip.onclick = () => {
+        active = cat;
+        renderFilters();
+        renderGrid();
+      };
+      filtersEl.appendChild(chip);
+    });
+  }
+
+  function renderGrid(){
+    grid.innerHTML = '';
+    IMAGES.filter(img => active === 'All' || img.category === active)
+      .forEach(img => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+          <div class="thumb">
+            <img src="${img.src}" alt="${img.title}">
+            <div class="badge">${img.category}</div>
+          </div>
+          <div class="body">
+            <div class="title">${img.title}</div>
+            <div class="meta">${img.price}</div>
+            <div class="actions">
+              <button class="btn-card">Details</button>
+              <button class="btn-card fill">Buy</button>
+            </div>
+          </div>
+        `;
+
+        card.querySelector('.thumb').onclick = () => {
+          lightbox.classList.add('open');
+          lightboxImg.src = img.src;
+          lightboxTitle.textContent = img.title;
+        };
+
+        grid.appendChild(card);
+      });
+  }
+
+  document.getElementById('closeBtn').onclick = () => lightbox.classList.remove('open');
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open') });
+  document.addEventListener('keydown', e => { if (e.key === "Escape") lightbox.classList.remove('open') });
+
+  renderFilters();
+  renderGrid();
+</script>
+</body>
+</html>

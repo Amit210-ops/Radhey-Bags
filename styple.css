@@ -1,0 +1,113 @@
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f9f9f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  background: #111;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .brand {
+  display: flex;
+  align-items: center;
+}
+
+header .brand img {
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+header nav a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header nav a:hover {
+  color: #ff9800;
+}
+
+/* Catalog Section */
+#catalog {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+#catalog h2 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #222;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  max-width: 100%;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.card h3 {
+  margin: 10px 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.card p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Contact Section */
+#contact {
+  background: #eee;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+#contact h2 {
+  margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  margin-top: 20px;
+}
